@@ -82,12 +82,13 @@ export function seriesStore(series: Array<Series>, props): SeriesStore {
 
 		data.color = getColorForSeries(data, idx);
 		data.prevOffset = 0;
-data.opacity  = getOpacityForSeries(data, idx);
+		data.opacity  = getOpacityForSeries(data, idx);
 		if(props.stackSeries)
 			data.radius = 50 - props.thickness;
 		else
-			data.radius = 50 - (idx + 1) * props.thickness - (idx > 0 ? props.margin : 0);
+			//data.radius = 50 - (idx + 1) * props.thickness - (idx > 0 ? props.margin : 0);
 
+			data.radius = 50 - (idx + 1) * props.thickness - (idx > 0 ? props.margin : 3);
 		return data;
 	};
 
