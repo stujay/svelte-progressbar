@@ -22,7 +22,8 @@ declare module "@okrad/svelte-progressbar" {
 			ry ?: number,
 			path ?: string,
 			colors ?: Array<string>,
-			thresholds ?: Array<Threshold>
+			opacities ?: Array<number>,
+			thresholds ?: Array<Threshold>,
 		}
 
 	}
@@ -41,7 +42,8 @@ export interface Series {
 	perc: number,
 	color ?: string,
 	prevOffset ?: number,
-	radius ?: number
+	radius ?: number,
+	opacity ?: number,
 }
 
 export interface Threshold {

@@ -19,6 +19,31 @@ export function seriesStore(series: Array<Series>, props): SeriesStore {
 
 	var labelForced = false;
 
+
+	function getOpacityForSeries(s: Series, seriesIdx: number) {
+
+		let opacity = null;
+
+		if(props.thresholds && props.thresholds.length > 0) {
+			const thres = props.thresholds.find((colInfo, idx) => (s.perc <= colInfo.till || idx == props.thresholds.length - 1));
+
+			if(thres)
+				opacity = thres.opacity;
+		}
+
+		if(!opacity) {
+
+			if(series[seriesIdx] && series[seriesIdx].hasOwnProperty('opacity') && series[seriesIdx].opacity) {
+				opacity = series[seriesIdx].opacity;
+			}
+			else {
+				opacity=1;
+			}
+		}
+
+		return opacity;
+	};
+	
 	function getColorForSeries(s: Series, seriesIdx: number) {
 
 		let color = null;
@@ -57,7 +82,7 @@ export function seriesStore(series: Array<Series>, props): SeriesStore {
 
 		data.color = getColorForSeries(data, idx);
 		data.prevOffset = 0;
-
+data.opacity  = getOpacityForSeries(data, idx);
 		if(props.stackSeries)
 			data.radius = 50 - props.thickness;
 		else
@@ -111,7 +136,7 @@ export function seriesStore(series: Array<Series>, props): SeriesStore {
 				}
 
 				newSeries[idx].color = getColorForSeries(newSeries[idx], idx);
-
+				newSeries[idx].opacity = getOpacityForSeries(newSeries[idx], idx);
 				overallPerc += newSeries[idx].perc;
 
 				if(props.stackSeries)
